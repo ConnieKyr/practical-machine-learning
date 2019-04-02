@@ -289,39 +289,39 @@ model_3&lt;-train(x=training_sel[,1:45], y=training_sel$classe, preProcess=c(&qu
 #RF model without preprocessing:
 model_4&lt;-train(x=training_sel[,1:45], y=training_sel$classe, method=&quot;rf&quot;,
                     trControl = fitControl, tuneLength = 3, metric=&quot;ROC&quot;)</code></pre>
-<p>Model Accuracies during training, derived from the 10-fold CV:</p>
-<pre class="r"><code>cat(&quot;Maximum Accuracies achieved during training&quot;)</code></pre>
-<pre><code>## Maximum Accuracies achieved during training</code></pre>
+<p>Model out-of-sample error rates during training, derived from the 10-fold CV:</p>
+<pre class="r"><code>cat(&quot;Out of sample error rates during training&quot;)</code></pre>
+<pre><code>## Out of sample error rates during training</code></pre>
 <pre class="r"><code>models&lt;-c(&quot;RF&quot;, &quot;gbm&quot;, &quot;xgbTree&quot;, &quot;RF_no_preprocessing&quot;)
-accuracies&lt;-c(max(model_1$results['Accuracy']), max(model_2$results['Accuracy']), max(model_3$results['Accuracy']), max(model_4$results['Accuracy']))
-kable(data.frame(models, accuracies))</code></pre>
+error_rates&lt;-c(1-max(model_1$results['Accuracy']), 1-max(model_2$results['Accuracy']), 1-max(model_3$results['Accuracy']), 1-max(model_4$results['Accuracy']))
+kable(data.frame(models, error_rates))</code></pre>
 <table>
 <thead>
 <tr class="header">
 <th align="left">models</th>
-<th align="right">accuracies</th>
+<th align="right">error_rates</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">RF</td>
-<td align="right">0.9926467</td>
+<td align="right">0.0073533</td>
 </tr>
 <tr class="even">
 <td align="left">gbm</td>
-<td align="right">0.9571952</td>
+<td align="right">0.0428048</td>
 </tr>
 <tr class="odd">
 <td align="left">xgbTree</td>
-<td align="right">0.9935939</td>
+<td align="right">0.0064061</td>
 </tr>
 <tr class="even">
 <td align="left">RF_no_preprocessing</td>
-<td align="right">0.9919928</td>
+<td align="right">0.0080072</td>
 </tr>
 </tbody>
 </table>
-<p>The models xgbTree and RF with preprocessing give the best accuracy during training. All the accuracies from the predictions of the hold-out samples at each Fold of the cross-validation process, are averaged and give us in the end the overall Accuracy. This is an estimate of the out-of-sample error rate.</p>
+<p>The models xgbTree and RF with preprocessing give the best accuracy during training. All the accuracies from the predictions of the hold-out samples at each Fold of the cross-validation process, are averaged and give us in the end the overall Accuracy. This is an estimate of the out-of-sample error rate (1 - Acc).</p>
 </div>
 <div id="ml-model-assessment-and-validation" class="section level2">
 <h2>ML Model Assessment and Validation</h2>
